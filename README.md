@@ -52,18 +52,18 @@ In the linear dynamic gain technique, as the user begins rotating their head tow
 
 The dynamic linear gain is calculated as:
 
-\[
+$\[
 \text{gain} = \left( \text{minGain} \times \left| \frac{\text{virtualRotationAngle} - \text{halfRotation}}{\text{halfRotation}} \right| \right) + \left( \text{maxGain} \times \left( 1 - \left| \frac{\text{virtualRotationAngle} - \text{halfRotation}}{\text{halfRotation}} \right| \right) \right)
-\]
+\]$
 
 
 The dynamic non-linear gain technique follows a similar pattern but increases and decreases the gain non-linearly. The gain grows at first, reaching a maximum value of 2.5 at half the target angle. Afterward, it decreases non-linearly until it returns to 1 at the target. This non-linear adjustment results in a smoother experience for users.
 
 The dynamic non-linear using a parabola equation and calculated as:
 
-\[
+$\[
 \text{gain} = -\frac{6}{\text{targetRotation}^2} \times \text{headRotation}^2 + \frac{6}{\text{targetRotation}} \times \text{headRotation} + 1
-\]
+\]$
 ![Dynamic Rotation Gains](</Assets/Screenshots/Screenshot 2024-10-17 210726.png>)
 Applied rotation gains during a 90◦ virtual rotation. Adapted from Langbehn et al. (2019).
 
