@@ -51,5 +51,9 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "vr-base-main-n-0.sln"
+    "dotnet.defaultSolution": "vr-base-main-n-0.sln",
+    "cSpell.words": [
+        "Deamplified",
+        "Deamplify"
+    ]
 }

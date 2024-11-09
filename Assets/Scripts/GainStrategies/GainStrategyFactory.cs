@@ -14,6 +14,8 @@ public static class GainStrategyFactory
                 return new DynamicNonLinearGainStrategy(context.targetRotation);
             case GainTechniquesEnum.controller:
                 return new ControllerGainStrategy(context.gainControllerInput);
+            case GainTechniquesEnum.controllerDeamplify:
+                return new ControllerGainDeamplifyStrategy(context.gainControllerInput);
             case GainTechniquesEnum.velocityGuided:
                 return new VelocityGuidedStrategy();
             case GainTechniquesEnum.step:

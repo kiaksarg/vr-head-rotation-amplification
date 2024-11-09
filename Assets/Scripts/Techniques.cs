@@ -27,6 +27,7 @@ namespace Techniques
         dynamicNonLinear,
         velocityGuided,
         controller,
+        controllerDeamplify,
         step,
     }
 

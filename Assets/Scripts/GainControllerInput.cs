@@ -6,6 +6,7 @@ using UnityEngine.XR;
 public class GainControllerInput : MonoBehaviour
 {
     public float gain = 1.0f; // Initial gain value
+    public float gainDeamplified = 1.0f; // Initial deAmplify gain value
     public float minGain = 1.0f; // Minimum gain value
     public float maxGain = 3.0f; // Maximum gain value
     public XRNode controllerNode = XRNode.RightHand; // Use Right Hand Controller; change to XRNode.LeftHand for Left Hand Controller
@@ -31,11 +32,14 @@ public class GainControllerInput : MonoBehaviour
         {
             // Map triggerValue (0.0 to 1.0) to gain range (1.0 to 3.0)
             gain = Mathf.Lerp(minGain, maxGain, triggerValue);
+            gainDeamplified = Mathf.Lerp(maxGain, minGain, triggerValue);
         }
     }
 
-    public float GetCurrentGain()
+    public float GetCurrentGain(bool isDeamplify = false)
     {
+        if (isDeamplify)
+            return gainDeamplified;
         return gain;
     }
 }
