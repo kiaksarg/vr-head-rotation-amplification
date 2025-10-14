@@ -15,14 +15,6 @@ This Unity project implements various techniques to manipulate and amplify head 
     - [Dynamic Gain (linear and non-linear)](#dynamic-gain-linear-and-non-linear)
     - [Velocity-Guided Gain](#velocity-guided-gain)
     - [Controller-Based Gain](#controller-based-gain)
-  - [Implementation Techniques](#implementation-techniques)
-    - [Constant](#constant)
-    - [Direct Delta](#direct-delta)
-    - [Pre-Calculated](#pre-calculated)
-    - [Cubic Spline Interpolation](#cubic-spline-interpolation)
-  - [References](#references)
-
-
 ---
 
 ## Gain Techniques
@@ -94,56 +86,6 @@ Velocity-Guided Gain calculates the gain based on the rotational velocity of the
 
 ### Controller-Based Gain
 Controller-Based Gain derives the gain value from an external controller input. This allows for real-time adjustments based on user interactions or other input devices.
-
----
-
-## Implementation Techniques
-To implement and apply gain to the VR environment, this project utilizes various techniques. These techniques determine how the calculated gain is applied to the camera in Unity.
-
-```csharp
-public enum GainApplyTechnique
-{
-    constant,
-    directDelta,
-    cubicSpline,
-    preCalculated,
-}
-```
-
-### Constant
-With the Constant Technique,  the virtual angle is calculated by multiplying the gain by the input angle (e.g., 30° × 2 = 60° virtual angle).This method is suitable when using a fixed gain technique.
-
-### Direct Delta
-The technique measures the yaw change (headsetRotationDelta) from the user's input (e.g., a 0.22-degree rotation). This yaw delta is then multiplied by a predefined gain value to amplify the effect. For example, with a gain of 2: deltaYaw = 0.22 * 2 = 0.44. The calculated yaw (0.44) is then added to the camera rotation.
-
-```csharp
-    private void DirectDeltaGainApply(float gain, Quaternion headsetRotationDelta)
-    {
-        Vector3 relativeEuler = onlyYAxisRotation(headsetRotationDelta).eulerAngles;
-        float yawAngle = NormalizeAngle(relativeEuler.y);
-        //To cancel out the headset rotation effect
-        Quaternion inverseCurrentRelativeRotation = Quaternion.Inverse(
-            Quaternion.Euler(new Vector3(0, yawAngle, 0))
-        );
-        float deltaYaw = yawAngle * gain;
-        relativeEuler.y = deltaYaw;
-        Quaternion gainedRotation = Quaternion.Euler(relativeEuler);
-        xrOrigin.CameraFloorOffsetObject.transform.localRotation *=
-            initialHeadsetRotation * gainedRotation * inverseCurrentRelativeRotation;
-    }
-```
-
-### Pre-Calculated
-With the Pre-Calculated method, we determine the output angle for every possible input angle.
-
-### Cubic Spline Interpolation
-The Cubic Spline Interpolation technique allows us to calculate fewer predefined input-output pairs and then use cubic spline interpolation to estimate the values between them. For instance, if we have precomputed that 20-degree maps to 30 degrees and 30-degree maps to 50 degrees, cubic spline interpolation can estimate the output for an input of 25 degrees, even though it wasn’t explicitly precomputed.
-
-
-![Cubic Spline Interpolation Accuracy](</Assets/Screenshots/CubicSplineInterpolation.png>)
-Cubic Spline Interpolation Accuracy
-
----
 
 ## References
 
